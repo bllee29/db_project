@@ -8,23 +8,12 @@ from server import config
 db = SQLAlchemy()
 migrate = Migrate()
 
-# asdfasdfasdf
-
 
 # 애플리케이션 팩토리
 # app 객체를 전역으로 사용할 때 발생하는 문제를 예방.
 def create_app():
     app = Flask(__name__)
     app.config.from_object(config)
-
-    # config
-    # config = app.config.get('ENV')
-    # if config == 'production':
-    #     app.config.from_object(config.ProductionConfig)
-    # elif config == 'testing':
-    #     app.config.from_object(config.TestingConfig)
-    # else:
-    # app.config.from_object(config.DevelopmentConfig)
 
     # database
     db.init_app(app)
