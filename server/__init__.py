@@ -8,6 +8,8 @@ from server import config
 db = SQLAlchemy()
 migrate = Migrate()
 
+# asdfasdfasdf
+
 
 # 애플리케이션 팩토리
 # app 객체를 전역으로 사용할 때 발생하는 문제를 예방.
