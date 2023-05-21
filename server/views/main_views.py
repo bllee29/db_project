@@ -3,6 +3,7 @@ from werkzeug.utils import redirect
 
 from server.models import Question
 
+# main_views.py 파일이 main 이름을 갖는 블루 프린트인것
 bp = Blueprint('main', __name__, url_prefix='/')
 
 

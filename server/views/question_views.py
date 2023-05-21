@@ -2,6 +2,7 @@ from flask import Blueprint, render_template
 
 from server.models import Question
 
+# question_views.py 파일이 question 이름을 갖는 블루 프린트인것
 bp = Blueprint('question', __name__, url_prefix='/question')
 
 
