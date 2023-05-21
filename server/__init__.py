@@ -22,8 +22,9 @@ def create_app():
 
     # main_views 블루프린트객체 등록
     # main함수에서 라우팅안하고 bp에서 하는듯
-    from server.views import main_views
+    from server.views import main_views, question_views
     app.register_blueprint(main_views.bp)
+    app.register_blueprint(question_views.bp)
 
     return app
 
