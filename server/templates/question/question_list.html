@@ -31,5 +31,6 @@ question_list인자를 외부에서 받아와서 html을 동적으로 생성하�
         {% endif %}
         </tbody>
     </table>
+    <a href="{{ url_for('question.create') }}" class="btn btn-primary">질문 등록하기</a>
 </div>
 {% endblock %}
