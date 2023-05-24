@@ -1,17 +1,20 @@
 from flask import Blueprint, render_template, url_for
 from werkzeug.utils import redirect
 
-from server.models import Question
 
-# main_views.py 파일이 main 이름을 갖는 블루 프린트인것
+# main_views.py main.bp의 이름을 갖게 한다.
+# main_views에서 사용하는 접두사는 '/'
+# bp는 Blueprint 클래스로 생성한 객체.
+# bp객체에 라우팅할 주소를 작성하여 server.__init__에 전부 작성을 하지않고 불러오는 방식으로.
 bp = Blueprint('main', __name__, url_prefix='/')
 
 
-# bp는 Blueprint 클래스로 생성한 객체.
-# Blueprint? 새로운 URL이 생길때마다 create_app 함수안에 추가하지 않아도 되게?
+# /으로 가면 question
 @bp.route('/')
 def index():
-    return redirect(url_for('question._list'))
+    return redirect(url_for('question._list'))  # 이름..을 전달하면 알아서 검색을 하는듯.
+# question_views의 _list로 redirect 해주는듯. url_for하면 그 blueprint도 검색을 하는듯
+
 
 @bp.route('/hello')
 def hello_server():
