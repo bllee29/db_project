@@ -1,3 +1,4 @@
+<!-- html에 사용할 데코레이터 -->
 <!doctype html>
 <html lang="ko">
 <head>
@@ -11,9 +12,13 @@
     <title>DBProject</title>
 </head>
 <body>
+<!-- 유지 보수를 위해 네비게이션 바 분리-->
+{% include "navbar.html" %}
 <!-- 기본 템플릿 안에 삽입될 내용 Start -->
 {% block content %}
 {% endblock %}
 <!-- 기본 템플릿 안에 삽입될 내용 End -->
+<!-- Bootstrap JS -->
+<script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
 </body>
 </html>
