@@ -30,10 +30,11 @@ def create_app():
     # main_views 블루프린트객체 등록
     # main함수에서 라우팅안하고 bp에서 하는듯
     # app에 내가 생성한 blueprint들을 등록해서 라우팅.
-    from server.views import main_views, question_views, answer_views  # bp들을 import하고 연결
+    from server.views import main_views, question_views, answer_views, auth_views  # bp들을 import하고 연결
     app.register_blueprint(main_views.bp)  # import한 main_views의 bp객체
     app.register_blueprint(question_views.bp)
     app.register_blueprint(answer_views.bp)
+    app.register_blueprint(auth_views.bp)
 
     #필터
     # 템플릿 필터 -- 템플릿 엔진에서 사용되는 필터로 주어진 데이터를 가공하거나 포맷팅한다.
