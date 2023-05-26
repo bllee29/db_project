@@ -26,6 +26,7 @@ def create_app():
     migrate.init_app(app, db)  # migrate도 설정.
     from server import models  # 이건 어디서 사용하는지 모르겠네 아마 migrate객체가 참조하는 것 같은데 flask db migrate명령어에서 사용하는듯
 
+    # 블루프린트
     # main_views 블루프린트객체 등록
     # main함수에서 라우팅안하고 bp에서 하는듯
     # app에 내가 생성한 blueprint들을 등록해서 라우팅.
@@ -33,5 +34,11 @@ def create_app():
     app.register_blueprint(main_views.bp)  # import한 main_views의 bp객체
     app.register_blueprint(question_views.bp)
     app.register_blueprint(answer_views.bp)
+
+    #필터
+    # 템플릿 필터 -- 템플릿 엔진에서 사용되는 필터로 주어진 데이터를 가공하거나 포맷팅한다.
+    # 함수를 임포트해서 app에 datetime이라는 이름으로 필터를 등록했다.
+    from server.filter import format_datetime
+    app.jinja_env.filters['datetime'] = format_datetime
 
     return app

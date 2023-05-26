@@ -21,8 +21,12 @@ question_list인자를 외부에서 받아와서 html을 동적으로 생성하�
             <td>{{ question.id }}</td>
             <td>
                 <a href="{{ url_for('question.detail', question_id=question.id) }}">{{ question.subject }}</a>
+                <!-- 답변갯수 -->
+                {% if question.answer_set|length > 0 %}
+                <span class="text-danger small mx-2">[{{ question.answer_set|length }}]</span>
+                {% endif %}
             </td>
-            <td>{{ question.create_date }}</td>
+            <td>{{ question.create_date|datetime }}</td> <!-- datetime필터 적용-->
         </tr>
         {% endfor %}
         {% else %}
