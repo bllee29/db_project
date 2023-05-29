@@ -7,9 +7,10 @@ question_list인자를 외부에서 받아와서 html을 동적으로 생성하�
 <div class="container my-3">
     <table class="table">
         <thead>
-        <tr class="table-dark">
+        <tr class="text-center table-dark">
             <th>번호</th>
-            <th>제목</th>
+            <th style="width:50%">제목</th>
+            <th>글쓴이</th>
             <th>작성일시</th>
         </tr>
         </thead>
@@ -17,15 +18,16 @@ question_list인자를 외부에서 받아와서 html을 동적으로 생성하�
         {% if question_list %}
         {% for question in question_list.items %}
         <!-- 그 Pagination 객체의 데이터를 가져오려면 .items 추가 -->
-        <tr>
+        <tr class="text-center">
             <td>{{ question.id }}</td>
-            <td>
+            <td class="text-start">
                 <a href="{{ url_for('question.detail', question_id=question.id) }}">{{ question.subject }}</a>
                 <!-- 답변갯수 -->
                 {% if question.answer_set|length > 0 %}
                 <span class="text-danger small mx-2">[{{ question.answer_set|length }}]</span>
                 {% endif %}
             </td>
+            <td>{{ question.user.username }}</td>
             <td>{{ question.create_date|datetime }}</td> <!-- datetime필터 적용-->
         </tr>
         {% endfor %}
