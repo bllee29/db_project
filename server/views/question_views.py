@@ -1,10 +1,12 @@
 from datetime import datetime
-from flask import Blueprint, render_template, url_for, request
+from flask import Blueprint, render_template, url_for, request, g
 from werkzeug.utils import redirect
 
 from .. import db
 from server.models import Question
 from ..forms import QuestionForm, AnswerForm
+from server.views.auth_views import login_required
+
 
 # question_views.py 파일이 question 이름을 갖는 블루 프린트인것
 bp = Blueprint('question', __name__, url_prefix='/question')
@@ -34,12 +36,13 @@ def detail(question_id):
 
 # methods는 이 라우트에서 사용할 http method들을 선언?
 @bp.route('/create', methods=('GET', 'POST'))
+@login_required  # 함수 데코레이터
 def create():
     form = QuestionForm() # form객체 생성후 return에 전달.
     # POST면 데이터 저장하고 메인페이지로
     if request.method == 'POST' and form.validate_on_submit():  # validate_~ 로 전송된 form 데이터의 정합성 확인.
         question = Question(subject=form.subject.data, content=form.content.data,
-                            create_date=datetime.now())  # 입력받은 내용을 기반으로 Question테이블에 새 entity생성
+                            create_date=datetime.now(), user=g.user)  # 입력받은 내용을 기반으로 Question테이블에 새 entity생성
         db.session.add(question)
         db.session.commit()  # commint해야됨.
         return redirect(url_for('main.index'))
