@@ -15,10 +15,15 @@
 <!-- 유지 보수를 위해 네비게이션 바 분리-->
 {% include "navbar.html" %}
 <!-- 기본 템플릿 안에 삽입될 내용 Start -->
+<!-- 다른 html에서 block content~endblock까지를 이곳에 표시하게 된다.-->
 {% block content %}
 {% endblock %}
 <!-- 기본 템플릿 안에 삽입될 내용 End -->
 <!-- Bootstrap JS -->
 <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+<!-- 자바스크립트 Start -->
+{% block script %}
+{% endblock %}
+<!-- 자바스크립트 End -->
 </body>
 </html>

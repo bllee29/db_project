@@ -1,6 +1,8 @@
 from datetime import datetime
-from flask import Blueprint, render_template, url_for, request, g
+from flask import Blueprint, render_template, url_for, request, g, flash
 from werkzeug.utils import redirect
+
+# flash는 강제로 오류 발생시키는 함수, 로직에 오류가 발생하는 경우에 처리담당.
 
 from .. import db
 from server.models import Question
@@ -49,3 +51,34 @@ def create():
     # GET이면 질문요청 페이지로 간다.
     return render_template('question/question_form.html', form=form)  # 템플릿에 인자 전달. get을 언제 사용하는건지..
     # get은 question_list페이지에서 여기로 넘어올때 get요청한다, post는 이 라우트페이지에서 뭔가를 post할때 사용
+
+
+@bp.route('/modify/<int:question_id>', methods=('GET', 'POST'))
+@login_required
+def modify(question_id):
+    question = Question.query.get_or_404(question_id)
+    if g.user != question.user:
+        flash('수정오류가 발생했습니다. 다시 시도해주세요.')
+        return redirect(url_for('question.detail', question_id=question_id))
+    if request.method == 'POST':  # POST 요청 - 수정하고 저장하기 버튼 누르면
+        form = QuestionForm()
+        if form.validate_on_submit():
+            form.populate_obj(question)
+            question.modify_date = datetime.now()  # 수정일시 저장
+            db.session.commit()
+            return redirect(url_for('question.detail', question_id=question_id))
+    else:  # GET 요청 - 수정하기 버튼 누르면
+        form = QuestionForm(obj=question)
+    return render_template('question/question_form.html', form=form)
+
+
+@bp.route('/delete/<int:question_id>')
+@login_required
+def delete(question_id):
+    question = Question.query.get_or_404(question_id)
+    if g.user != question.user:
+        flash('삭제권한이 없습니다')
+        return redirect(url_for('question.detail', question_id=question_id))
+    db.session.delete(question)
+    db.session.commit()
+    return redirect(url_for('question._list'))
