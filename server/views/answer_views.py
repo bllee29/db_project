@@ -22,7 +22,8 @@ def create(question_id):
         answer = Answer(content=content, create_date=datetime.now(), user=g.user)  # 새 answer entity 생성
         question.answer_set.append(answer)
         db.session.commit()  # commit해야됨.
-        return redirect(url_for('question.detail', question_id=question_id))
+        return redirect('{}#answer_{}'.format(
+            url_for('question.detail', question_id=question_id), answer.id))
     return render_template('question/question_detail.html', question=question, form=form)
 
 
@@ -39,7 +40,8 @@ def modify(answer_id):
             form.populate_obj(answer)  # 불러온 answer을 수정한다.
             answer.modify_date = datetime.now()  # 수정일자 저장
             db.session.commit()  # 수정한 answer객체 저장
-            return redirect(url_for('question.detail', question_id=answer.question_id))
+            return redirect('{}#answer_{}'.format(
+                url_for('question.detail', question_id=answer.question.id), answer.id))
     else:  # get요청 - 수정하기 할때는 form에 기존에 있던거 채워서 보여주고
         form = AnswerForm(obj=answer)
     return render_template('answer/answer_form.html', form=form)
@@ -67,4 +69,5 @@ def vote(answer_id):
     else:
         _answer.voter.append(g.user)
         db.session.commit()
-    return redirect(url_for('question.detail', question_id=_answer.question.id))
+    return redirect('{}#answer_{}'.format(
+        url_for('question.detail', question_id=_answer.question.id), _answer.id))

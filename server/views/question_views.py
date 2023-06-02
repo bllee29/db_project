@@ -5,7 +5,7 @@ from werkzeug.utils import redirect
 # flash는 강제로 오류 발생시키는 함수, 로직에 오류가 발생하는 경우에 처리담당.
 
 from .. import db
-from server.models import Question
+from server.models import Question, Answer, User
 from ..forms import QuestionForm, AnswerForm
 from server.views.auth_views import login_required
 
@@ -14,17 +14,44 @@ from server.views.auth_views import login_required
 bp = Blueprint('question', __name__, url_prefix='/question')
 
 
-# import한 Question 테이블의 entity들을 이용.
-@bp.route('/list')
+# # import한 Question 테이블의 entity들을 이용.
+# @bp.route('/list')
+# def _list():
+#     page = request.args.get('page', type=int, default=1)  # 페이지
+#     # http://localhost:5000/question/list/?page=5 와 같이 마지막에 ?page=num 으로 인자를 전달해서 페이지를 보여준다.
+#     # num값이 비어있으면 1쪽을 보여줌
+#     question_list = Question.query.order_by(Question.id.desc())
+#     question_list = question_list.paginate(page=page, per_page=20)  # 페이지
+#     # page는 현재 보여줄 page를 의미 per_page는 몇개씩 보여줄것인지.
+#     return render_template('question/question_list.html', question_list=question_list)  # 템플릿에 인자 전달.
+
+@bp.route('/list/')
 def _list():
     page = request.args.get('page', type=int, default=1)  # 페이지
     # http://localhost:5000/question/list/?page=5 와 같이 마지막에 ?page=num 으로 인자를 전달해서 페이지를 보여준다.
     # num값이 비어있으면 1쪽을 보여줌
-    # 원래 create_date순서로 정렬했는데 어짜피 생성일자 순으로 id부여받으니까 id순으로 해버리기?
-    question_list = Question.query.order_by(Question.id.desc())
-    question_list = question_list.paginate(page=page, per_page=20)  # 페이지
+    kw = request.args.get('kw', type=str, default='')  # keyword
+    question_list = Question.query.order_by(Question.create_date.desc())
+    if kw:  # 전달받은 kw가 있으면 아래 진행.
+        search = '%%{}%%'.format(kw)  # 양쪽에 그 원래 있던거 붙여서 formatting
+        sub_query = db.session.query(Answer.question_id, Answer.content, User.username) \
+            .join(User, Answer.user_id == User.id).subquery()
+        # 검색에 사용할 답변내용 content, 작성자 user, 이 서브쿼리와 질문을 연결할 question.id 사용
+        question_list = question_list \
+            .join(User) \
+            .outerjoin(sub_query, sub_query.c.question_id == Question.id) \
+            .filter(Question.subject.ilike(search) |  # 질문제목
+                    Question.content.ilike(search) |  # 질문내용
+                    User.username.ilike(search) |  # 질문작성자
+                    sub_query.c.content.ilike(search) |  # 답변내용
+                    sub_query.c.username.ilike(search)  # 답변작성자
+                    ) \
+            .distinct()  # 중복 제거
+        #  sub_query.c~~에서 c는 서브쿼리의 조회 항목.
+    question_list = question_list.paginate(page=page, per_page=20)
     # page는 현재 보여줄 page를 의미 per_page는 몇개씩 보여줄것인지.
-    return render_template('question/question_list.html', question_list=question_list)  # 템플릿에 인자 전달.
+    return render_template('question/question_list.html', question_list=question_list, page=page, kw=kw)
+
 
 
 # 해당하는 question_id에 따라 해당 entity의 내용을 표현
