@@ -14,7 +14,7 @@
             {% if g.user %} <!-- g.user값이 있으면 -->
             <ul class="navbar-nav">
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ url_for('auth.logout') }}">{{ g.user.username }} (로그아웃)</a>
+                    <a class="nav-link" href="{{ url_for('auth.logout', paths=request.path) }}">{{ g.user.username }} (로그아웃)</a>
                 </li>
             </ul>
             {% else %}

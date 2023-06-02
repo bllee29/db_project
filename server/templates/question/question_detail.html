@@ -19,20 +19,24 @@
                     <div>{{ question.modify_date|datetime }}</div>
                 </div>
                 {% endif %}
-            </div>
-            <div class="my-3">
-                {% if g.user == question.user %}
-                <a href="{{ url_for('question.modify', question_id=question.id) }}"
-                   class="btn btn-sm btn-outline-secondary">수정</a>
-                <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
-               data-uri="{{ url_for('question.delete', question_id=question.id) }}">삭제</a>
-                {% endif %}
-            </div>
-                <div class="badge bg-light text-dark p-2 text-start float-end"> <!-- float-end 로 정렬-->
+                <div class="badge bg-light text-dark p-2 text-start"> <!-- float-end 로 정렬-->
                     <div class="mb-2">{{ question.user.username }}</div>
                     <div>{{ question.create_date|datetime }}</div>
                 </div>
+            </div>
+            <a href="javascript:void(0)" data-uri="{{ url_for('question.vote', question_id=question.id) }}"
+               class="recommend btn btn-sm btn-outline-secondary"> 추천
+                <span class="badge rounded-pill bg-success">{{ question.voter|length }}</span>
+            </a>
         </div>
+    </div>
+    <div class="my-3">
+        {% if g.user == question.user %}
+        <a href="{{ url_for('question.modify', question_id=question.id) }}"
+           class="btn btn-sm btn-outline-secondary">수정</a>
+        <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
+           data-uri="{{ url_for('question.delete', question_id=question.id) }}">삭제</a>
+        {% endif %}
     </div>
 <!--에 answer_set은 models.py에 Answer모델에 question과의 1대 다 관계로 설정되어있다. -->
     <!-- 답변 목록 -->
@@ -53,15 +57,19 @@
                     <div>{{ answer.create_date|datetime }}</div>
                 </div>
             </div>
-            <div class="my-3">
-            {% if g.user == answer.user %}
-            <a href="{{ url_for('answer.modify', answer_id=answer.id) }}"
-               class="btn btn-sm btn-outline-secondary">수정</a>
-            <a href="#" class="delete btn btn-sm btn-outline-secondary "
-               data-uri="{{ url_for('answer.delete', answer_id=answer.id) }}">삭제</a>
-            {% endif %}
+            <a href="javascript:void(0)" data-uri="{{ url_for('answer.vote', answer_id=answer.id) }}"
+               class="recommend btn btn-sm btn-outline-secondary"> 추천
+                <span class="badge rounded-pill bg-success">{{ answer.voter|length }}</span>
+            </a>
         </div>
-        </div>
+    </div>
+    <div class="my-3">
+        {% if g.user == answer.user %}
+        <a href="{{ url_for('answer.modify', answer_id=answer.id) }}"
+           class="btn btn-sm btn-outline-secondary">수정</a>
+        <a href="#" class="delete btn btn-sm btn-outline-secondary "
+           data-uri="{{ url_for('answer.delete', answer_id=answer.id) }}">삭제</a>
+        {% endif %}
     </div>
     {% endfor %}
     <!-- 답변 등록 -->
@@ -95,6 +103,14 @@ const delete_elements = document.getElementsByClassName("delete");
 Array.from(delete_elements).forEach(function(element) {
     element.addEventListener('click', function() {
         if(confirm("정말로 삭제하시겠습니까?")) {
+            location.href = this.dataset.uri;
+        };
+    });
+});
+const recommend_elements = document.getElementsByClassName("recommend");
+Array.from(recommend_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        if(confirm("정말로 추천하시겠습니까?")) {
             location.href = this.dataset.uri;
         };
     });

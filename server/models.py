@@ -1,6 +1,20 @@
 from server import db
 
 
+# many to many 관계 설정. N:N
+question_voter = db.Table(
+    'question_voter',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), primary_key=True),
+    db.Column('question_id', db.Integer, db.ForeignKey('question.id', ondelete='CASCADE'), primary_key=True)
+)
+
+answer_voter = db.Table(
+    'answer_voter',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), primary_key=True),
+    db.Column('answer_id', db.Integer, db.ForeignKey('answer.id', ondelete='CASCADE'), primary_key=True)
+)
+
+
 # question table
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)  # 자동으로 부여되는 글번호
@@ -10,6 +24,8 @@ class Question(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
     user = db.relationship('User', backref=db.backref('question_set'))
     modify_date = db.Column(db.DateTime(), nullable=True)
+    # backref에 같은이름 사용 불가. N:N관계는 secondary로 추가. 데이터는 question_voter에 저장. question모델에서 참조가능.
+    voter = db.relationship('User', secondary=question_voter, backref=db.backref('question_voter_set'))
 
 
 # answer table
@@ -23,6 +39,7 @@ class Answer(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
     user = db.relationship('User', backref=db.backref('answer_set'))
     modify_date = db.Column(db.DateTime(), nullable=True)
+    voter = db.relationship('User', secondary=answer_voter, backref=db.backref('answer_voter_set'))
 
 
 class User(db.Model):
