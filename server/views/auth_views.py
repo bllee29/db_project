@@ -64,8 +64,9 @@ def load_logged_in_user():
 
 @bp.route('/logout/')
 def logout():
+    paths = request.args.get('paths')  # 인자로 전달하는게 아니라 html에서 그 arg로 보낸걸 잡아오기 인자는 python코드에서 전달.
     session.clear()
-    return redirect(url_for('main.index'))
+    return redirect(paths)
 
 
 # 데코레이터 함수
