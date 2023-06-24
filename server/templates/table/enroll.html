@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h5 class="my-3 border-bottom pb-2">시간표추가</h5>
+    <form method="post">
+        {{ form.csrf_token }}
+        {% include "form_errors.html" %}
+        <div class="mb-3">
+            <label for="coursename">강의이름분반('데이터베이스1'과같이 작성)</label>
+            <input type="text" class="form-control" name="coursename" id="coursename"
+                   value="{{ form.coursename.data or '' }}">
+        </div>
+        <button type="submit" class="btn btn-primary">추가하기</button>
+    </form>
+</div>
+{% endblock %}

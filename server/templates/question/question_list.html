@@ -86,6 +86,12 @@ question_list인자를 외부에서 받아와서 html을 동적으로 생성하�
         </div>
         <div class="col-6">
             <div class="input-group">
+
+                <select id="search_course" class="form-control" value="{{ course or '' }}">
+                    {% for class in course %}
+                    <option>{{ class }}</option>
+                    {% endfor %}
+                </select>
                 <input type="text" id="search_kw" class="form-control" value="{{ kw or '' }}" placeholder="내용, 제목, 작성자">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
@@ -95,6 +101,7 @@ question_list인자를 외부에서 받아와서 html을 동적으로 생성하�
     </div>
 </div>
 <form id="searchForm" method="get" action="{{ url_for('question._list') }}">
+    <input type="hidden" id="course" name="course" value="{{ course or '' }}">
     <input type="hidden" id="kw" name="kw" value="{{ kw or '' }}">
     <input type="hidden" id="page" name="page" value="{{ page }}">
 </form>
@@ -111,6 +118,7 @@ Array.from(page_elements).forEach(function(element) {
 const btn_search = document.getElementById("btn_search");
 btn_search.addEventListener('click', function() {
     document.getElementById('kw').value = document.getElementById('search_kw').value;
+    document.getElementById('course').value = document.getElementById('search_course').value;
     document.getElementById('page').value = 1;  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
     document.getElementById('searchForm').submit();
 });

@@ -5,29 +5,27 @@
     <form method="post" class="post-form my-3">
         {{ form.csrf_token }}<!-- post하는 경우에 csrf_token필요 -->
         <!-- 오류표시 Start -->
-        {% if form.errors %}
-        <div class="alert alert-danger" role="alert">
-            {% for field, errors in form.errors.items() %}
-            <strong>{{ form[field].label }}</strong>
-            <ul>
-                {% for error in errors %}
-                <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-            {% endfor %}
-        </div>
-        {% endif %}
+        {% include "form_errors.html" %}
         <!-- 오류표시 End -->
         <div class="mb-3">
             <label for="subject">제목</label>
             <!-- input은 한줄짜리 inline element 내용을 채우고싶으면 value로 -->
             <input type="text" class="form-control" name="subject" id="subject"
-                value="{{ form.subject.data or '' }}"> <!-- 오류 발생시 그 이전에 응답한 기록-->
+                   value="{{ form.subject.data or '' }}"> <!-- 오류 발생시 그 이전에 응답한 기록-->
         </div>
         <div class="mb-3">
             <label for="content">내용</label>
             <!-- textarea는 block으로 구분되는 block element -->
             <textarea class="form-control" name="content" id="content" rows="10">{{ form.content.data or '' }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="course">수업이름</label>
+            <select name="course" id="course">
+                {% for class in course %}
+                <option>{{ class }}</option>
+                {% endfor %}
+            </select>
+
         </div>
         <button type="submit" class="btn-primary">저장하기</button>
     </form>

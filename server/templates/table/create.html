@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h5 class="my-3 border-bottom pb-2">강의생성</h5>
+    <form method="post">
+        {{ form.csrf_token }}
+        {% include "form_errors.html" %}
+
+        <div class="mb-3">
+            <label for="coursename">강의이름분반(데이터베이스1과같이 작성)</label>
+            <input type="text" class="form-control" name="coursename" id="coursename"
+                   value="{{ form.coursename.data or '' }}">
+        </div>
+        <div class="mb-3">
+            <label for="cdate1">수업요일1</label>
+            <select name="cdate1" id="cdate1">
+                <option>월</option>
+                <option>화</option>
+                <option>수</option>
+                <option>목</option>
+                <option>금</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="startTime1">수업시작시간</label>
+            <select name="startTime1" id="startTime1">
+                <option>9</option>
+                <option>9.5</option>
+                <option>10</option>
+                <option>10.5</option>
+                <option>11</option>
+                <option>11.5</option>
+                <option>12</option>
+                <option>12.5</option>
+                <option>13</option>
+                <option>13.5</option>
+                <option>14</option>
+                <option>14.5</option>
+                <option>15</option>
+                <option>15.5</option>
+                <option>16</option>
+                <option>16.5</option>
+                <option>17</option>
+                <option>17.5</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="classTime1">몇시간 수업</label>
+            <select name="classTime1" id="classTime1">
+                <option>0.5</option>
+                <option>1</option>
+                <option>1.5</option>
+                <option>2</option>
+                <option>2.5</option>
+                <option>3</option>
+                <option>3.5</option>
+                <option>4</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            수업을 하루만 하면 아래는 그대로
+        </div>
+        <div class="mb-3">
+            <label for="cdate2">수업요일2</label>
+            <select name="cdate2" id="cdate2">
+                <option>0</option>
+                <option>월</option>
+                <option>화</option>
+                <option>수</option>
+                <option>목</option>
+                <option>금</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="startTime2">수업시작시간</label>
+            <select name="startTime2" id="startTime2">
+                <option>0</option>
+                <option>9</option>
+                <option>9.5</option>
+                <option>10</option>
+                <option>10.5</option>
+                <option>11</option>
+                <option>11.5</option>
+                <option>12</option>
+                <option>12.5</option>
+                <option>13</option>
+                <option>13.5</option>
+                <option>14</option>
+                <option>14.5</option>
+                <option>15</option>
+                <option>15.5</option>
+                <option>16</option>
+                <option>16.5</option>
+                <option>17</option>
+                <option>17.5</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="classTime2">몇시간 수업</label>
+            <select name="classTime2" id="classTime2">
+                <option>0</option>
+                <option>0.5</option>
+                <option>1</option>
+                <option>1.5</option>
+                <option>2</option>
+                <option>2.5</option>
+                <option>3</option>
+                <option>3.5</option>
+                <option>4</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">생성하기</button>
+    </form>
+</div>
+{% endblock %}

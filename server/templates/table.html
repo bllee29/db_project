@@ -1,47 +1,158 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>시간표</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-    </style>
-</head>
-<body>
-    <h1>시간표</h1>
-    <table>
+<div class="table table-bordered">
+
+    <h1>{{ user.username }}이 듣는 수업들</h1>
+
+    <table style="width:50%">
         <tr>
-            <th>시간</th>
+            <th> </th>
             <th>월</th>
             <th>화</th>
             <th>수</th>
             <th>목</th>
             <th>금</th>
         </tr>
+        <!-- if user의 시간표중에 time이 9~10-->
         <tr>
-            <td>09:00 - 10:00</td>
-            <td>과학</td>
-            <td>영어</td>
-            <td>수학</td>
-            <td>국어</td>
-            <td>체육</td>
+            <th>9:00~9:30</th>
+            <!-- 여기서부터는 칸마다 if 날짜-->
+            <td> </td>
+            <td> 자료구조 </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
         </tr>
         <tr>
-            <td>10:00 - 11:00</td>
-            <td>수학</td>
-            <td>과학</td>
-            <td>영어</td>
-            <td>체육</td>
-            <td>음악</td>
+            <th>9:30~10:00</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td > 데이터 통신 </td>
         </tr>
-        <!-- 나머지 시간대와 과목을 추가 -->
+        <tr>
+            <th>10:30~11:00</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <th>11:00~11:30</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <th>11:30~12:00</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <th>12:00~12:30</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <th>12:30~13:00</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <th>13:00~13:30</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <th>13:30~14:00</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <th>14:00~14:30</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <th>14:30~15:00</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <th>15:30~15:30</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <th>15:30~16:00</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <th>16:00~16:30</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <th>16:30~17:00</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <th>17:00~17:30</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <th>17:30~18:00</th>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
     </table>
-</body>
-</html>
+
+    <div>
+    <a>{{ course.cTime }}</a>
+    </div>
+
+</div>

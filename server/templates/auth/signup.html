@@ -6,6 +6,13 @@
         {{ form.csrf_token }}
         {% include "form_errors.html" %}
         <div class="mb-3">
+            <label>사용자 구분</label>
+            <select name="jobs">
+                <option>학생</option>
+                <option>교수</option>
+            </select>
+        </div>
+        <div class="mb-3">
             <label for="username">사용자 이름</label>
             <input type="text" class="form-control" name="username" id="username"
                    value="{{ form.username.data or '' }}">
