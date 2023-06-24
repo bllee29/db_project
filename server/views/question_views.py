@@ -96,7 +96,7 @@ def create():
                             course_id=form.course.data)  # 입력받은 내용을 기반으로 Question테이블에 새 entity생성
         db.session.add(question)
         db.session.commit()  # commint해야됨.
-        return redirect(url_for('question._list', kw=form.course.data))
+        return redirect(url_for('question._list', course=form.course.data))
 
     # GET이면 질문요청 페이지로 간다.
     course_list = getcourse()
