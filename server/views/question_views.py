@@ -109,6 +109,7 @@ def create():
 @login_required
 def modify(question_id):
     question = Question.query.get_or_404(question_id)
+    course_list = getcourse()
     if g.user != question.user:
         flash('수정오류가 발생했습니다. 다시 시도해주세요.')
         return redirect(url_for('question.detail', question_id=question_id))
@@ -121,7 +122,7 @@ def modify(question_id):
             return redirect(url_for('question.detail', question_id=question_id))
     else:  # GET 요청 - 수정하기 버튼 누르면
         form = QuestionForm(obj=question)
-    return render_template('question/question_form.html', form=form)
+    return render_template('question/question_form.html', form=form, course=course_list)
 
 
 @bp.route('/delete/<int:question_id>')
