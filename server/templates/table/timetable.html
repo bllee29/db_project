@@ -16,7 +16,7 @@
     }
 </style>
 <div class="table table-bordered">
-    <h1>{{ user.username }}이 듣는 수업들</h1>
+    <h1>{{ user.username }}의 수업</h1>
     <ul>
         {% for class in cl %}
         <li><a href="{{ url_for('question._list', course=class) }}">{{ class }}</a></li>
