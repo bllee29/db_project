@@ -12,7 +12,8 @@ bp = Blueprint('main', __name__, url_prefix='/')
 # /으로 가면 table로 연결된다. table에서 바로 login_required로 로그인 요청
 @bp.route('/')
 def index():
-    return redirect(url_for('table.main_page'))  # 이름..을 전달하면 알아서 검색을 하는듯.
+    return redirect(url_for('table.main_page'))
+# 이름..을 전달하면 알아서 검색을 하는듯.
 # question_views의 _list로 redirect 해주는듯. url_for하면 그 blueprint도 검색을 하는듯
 
 

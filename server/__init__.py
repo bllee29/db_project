@@ -18,12 +18,12 @@ migrate = Migrate()
 # create_app()함수를 인식하는 것 같다. create_app함수의 이름을 바꾸니 flask run 명령어로 실행이 되지 않음.
 # create_app() 또는 그냥 실행해서 app 객체를 생성하면 flask run이 되는듯.
 def create_app():
-    app = Flask(__name__)  # __name__ 현재 모듈의 이름 아마 server이 전달될듯. 그 내부의 파일들, 템플릿들을 찾는데 사용하는듯
-    app.config.from_object(config)  # import한 config 파일 받아온다.
+    app = Flask(__name__)
+    app.config.from_object(config)
 
     # database / ORM
-    db.init_app(app)  # sqlAlchemy로 불러온 db에 현재 app객체를 연결 ORM?
-    migrate.init_app(app, db)  # migrate도 설정.
+    db.init_app(app)  # 생성한 flask app 객체와 db를 연결한다. ORM설정
+    migrate.init_app(app, db)
     from server import models  # 이건 어디서 사용하는지 모르겠네 아마 migrate객체가 참조하는 것 같은데 flask db migrate명령어에서 사용하는듯
 
     # 블루프린트
